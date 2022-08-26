@@ -27,12 +27,6 @@ class Solution {
             }
         }
         
-        for i in 0..<s1.count {
-            if hash1[s1[i]] !=  hash2[s1[i]] {
-                return false
-            }
-        }
-        
-        return true
+        return hash1 == hash2
     }
 }

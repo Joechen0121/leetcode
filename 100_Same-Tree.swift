@@ -15,45 +15,25 @@
  */
 class Solution {
     func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
-        var stackP: [TreeNode] = [TreeNode]()
-        var stackQ: [TreeNode] = [TreeNode]()
-
-        if (p == nil) && (q == nil) {
-            return true
+        
+        guard (p != nil && q != nil) || (p == nil && q == nil) else { return false }
+        
+        var queueLeft = [p]
+        var queueRight = [q]
+        
+        while !queueLeft.isEmpty && !queueRight.isEmpty {
+            let leftNode = queueLeft.removeFirst()
+            let rightNode = queueRight.removeFirst()
+            
+            if leftNode == nil && rightNode == nil { continue }
+            guard let left = leftNode, let right = rightNode else { return false }
+            guard left.val == right.val else { return false }
+            
+            queueLeft += [left.left, left.right]
+            queueRight += [right.left, right.right]
         }
-        else if ((p == nil) && (q != nil) ) || ((p != nil) && (q == nil)) {
-            return false
-        }
-
-        stackP.append(p!)
-        stackQ.append(q!)
-
-        while(!stackQ.isEmpty || !stackQ.isEmpty) {
-            let nodeP = stackP.removeLast()
-            let nodeQ = stackQ.removeLast()
-
-            if (nodeP.val != nodeQ.val) {
-                return false
-            }
-
-            if (nodeP.left != nil) && (nodeQ.left != nil) {
-                stackP.append(nodeP.left!)
-                stackQ.append(nodeQ.left!)
-            }
-            else if ( (nodeP.left != nil) && (nodeQ.left == nil) ) ||
-                        ( (nodeP.left == nil) && (nodeQ.left != nil) ){
-                return false
-            }
-
-            if (nodeP.right != nil) && (nodeQ.right != nil) {
-                stackP.append(nodeP.right!)
-                stackQ.append(nodeQ.right!)
-            }
-            else if ( (nodeP.right != nil) && (nodeQ.right == nil) ) ||
-                        ( (nodeP.right == nil) && (nodeQ.right != nil) ){
-                return false
-            }
-        }
-        return true
+        
+        return queueLeft.isEmpty && queueRight.isEmpty
+    
     }
 }

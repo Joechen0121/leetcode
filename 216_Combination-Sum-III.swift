@@ -3,7 +3,7 @@ class Solution {
     var path = [Int]()
     var sum = 0
     
-    func backtracking(_ k: Int, _ n: Int, _ maxNum: Int, _ path: inout [Int], _ startIndex: Int, _ sum: inout Int) {
+    func backtracking(_ k: Int, _ n: Int, _ path: inout [Int], _ startIndex: Int, _ sum: inout Int) {
         
         if sum > n {
             return 
@@ -18,10 +18,10 @@ class Solution {
             return 
         }
         
-        for i in startIndex..<maxNum {
+        for i in startIndex..<10 {
             sum += i
             path.append(i)
-            backtracking(k, n, maxNum, &path, i+1, &sum)
+            backtracking(k, n, &path, i+1, &sum)
             path.removeLast()
             sum -= i
         }
@@ -31,7 +31,7 @@ class Solution {
         
         let maxNum = (n > 9) ? 10 : n
         
-        backtracking(k, n, maxNum, &path, 1, &sum)
+        backtracking(k, n, &path, 1, &sum)
         
         return result
     }

@@ -1,20 +1,15 @@
 class Solution {
     func maxProfit(_ prices: [Int]) -> Int {
         
-        var min: Int = Int.max
-        var profit: Int = 0
-
+        // Greedy
+        var minPrice = prices[0]
+        var maxProfit = 0
+        
         for i in 0..<prices.count {
-            if (prices[i] < min) {
-                min = prices[i]
-            }
-
-            // earn
-            let calProfit = prices[i] - min
-            if (calProfit > profit) {
-                profit = calProfit
-            }
+            minPrice = min(minPrice, prices[i])
+            maxProfit = max(maxProfit, prices[i] - minPrice)
         }
-        return profit 
+        
+        return maxProfit
     }
 }
